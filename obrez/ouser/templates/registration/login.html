@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block css %}
+	{{ block.super }}
+	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/login{% if not debug %}.min{% endif %}.css" />
+	{% if debug %}
+		{{ form.media.css }}
+	{% endif %}
+{% endblock %}
+
+{% block js %}
+	{{ block.super }}
+	{% if debug %}
+		{{ form.media.js }}
+	{% else %}
+		<script type="text/javascript" src="{{ STATIC_URL }}js/login{% if not debug %}.min{% endif %}.js"></script>
+	{% endif %}
+{% endblock %}
+
+{% block header %}
+	<div id="head-logo"><a href="{% url index %}">{% trans "Qliker" %}</a></div>
+	<a class="button dark corner c5" href="{% url registration %}" id="register-btn" alt="{% trans "Регистрация" %}" title="{% trans "Регистрация" %}">{% trans "Регистрация" %}</a>
+{% endblock %}
+
+{% block headline %}{% trans "Авторизация" %}{% endblock %}
+
+{% block data %}
+<h3>{% trans "Авотризуйтесь для того, чтобы войти в свой QLIKER аккаунт" %}</h3>
+<form id="login-form" action="." method="POST">
+	{% csrf_token %}
+	{% for field in form %}
+	<div class="field">
+		{{ field.label_tag }}{{ field }}
+	</div>
+	{% endfor %}
+	<div class="error">
+		{% if form.username.errors and form.password.errors %}
+			{{ form.non_field_errors.0 }}
+		{% else %}
+			{{ form.non_field_errors.0 }}
+			{{ form.errors.username.0 }}				
+			{{ form.errors.password.0 }}					
+		{% endif %}
+	</div>
+	<div class="oh">
+		<div class="fl submit">
+			<input class="button dark c5" type="submit" alt="{% trans "Войти" %}" title="{% trans "Войти" %}" value="{% trans "Войти" %}"/>
+		</div>
+		<div class="fl">
+			<a href="{% url password_reset %}" class="fl" id="forgot" title="{% trans "Восстановление пароля" %}">{% trans "Забыли пароль?" %}</a>
+		</div>
+	</div>
+</form>
+{% endblock %}

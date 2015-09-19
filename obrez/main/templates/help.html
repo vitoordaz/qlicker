@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "(FAQ) Часто задаваемые вопросы" %}{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/help{% if not debug %}.min{% endif %}.css" />
+{% endblock %}
+
+{% block js %}{% endblock %}
+
+
+{% block content %}
+<div id="content">
+	<div class="page">
+		<h1>{% trans "(FAQ) Часто задаваемые вопросы" %}</h1>
+			<h3 class="noborder">{% trans "Базовые вопросы" %}</h3>
+			<ul class="faq">
+				<li><a href="">Что такое Qliker?</a></li>
+				<li><a href="">Как работает сервис?</a></li>
+				<li><a href="">Как сокращать ссылки?</a></li>
+				<li><a href="">Что такое Qlink ссылка?</a></li>
+			</ul>
+			<h3 class="noborder">Синхронизация Qliker аккаунта с другими сайтами и приложениями</h3>
+			 <ul class="faq">
+					<li><a href="">Что такое Qliker?</a></li>
+					<li><a href="">Как работает сервис?</a></li>
+					<li><a href="">Как сокращать ссылки?</a></li>
+					<li><a href="">Что такое Qlink ссылка?</a></li>
+			</ul>
+			<h3 class="noborder">Как делится и управлять ссылками</h3>
+				<ul class="faq">
+					<li><a href="">Что такое Qliker?</a></li>
+					<li><a href="">Как работает сервис?</a></li>
+					<li><a href="">Как сокращать ссылки?</a></li>
+					<li><a href="">Что такое Qlink ссылка?</a></li>
+				</ul>
+			 <h3 class="noborder">Сбор данных и метрика</h3>
+			 <ul class="faq">
+					<li><a href="">Что такое Qliker?</a></li>
+					<li><a href="">Как работает сервис?</a></li>
+					<li><a href="">Как сокращать ссылки?</a></li>
+					<li><a href="">Что такое Qlink ссылка?</a></li>
+			</ul>
+			<h3 class="noborder">{% trans "Конфиденциальность, безопасность и условия использования" %}</h3>
+			 <ul class="faq">
+					<li><a href="">Что такое Qliker?</a></li>
+					<li><a href="">Как работает сервис?</a></li>
+					<li><a href="">Как сокращать ссылки?</a></li>
+					<li><a href="">Что такое Qlink ссылка?</a></li>
+			</ul>
+	</div>
+	<div id="aframe-bottom">{% include "footer.html" %}</div>
+</div>
+{% endblock %}

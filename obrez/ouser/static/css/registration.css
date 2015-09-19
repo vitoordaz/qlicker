@@ -1,0 +1,28 @@
+/**
+ * Header
+ */
+#auth-btn{
+	margin-right: 20px;
+}
+#reg-box{
+    width: 460px;
+	
+}
+#info-box{
+    width: 300px;
+}
+.promo-box{
+	width: 100%;
+	background-color: #FDFDEF;
+	border: 1px solid #BADDEE;
+	overflow:hidden;
+}
+.promo-box h5{
+    border-bottom: 1px solid #CCCCCC;
+    margin: 7px 7px 0 8px;
+    padding-bottom: 6px;
+}
+.promo-box p{
+	margin: 7px 5px 8px 8px;
+	font-size:1em;
+}

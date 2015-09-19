@@ -1,0 +1,15 @@
+{% load i18n %}
+<div class="footer">
+	<div class="btm">
+		<ul class="hm fl pr">
+			<li><a href="{% url terms %}">{% trans "Условия" %}</a></li>
+			<li><a href="{% url help %}">{% trans "Справочная" %}</a></li>
+		</ul>
+		{% if user.is_anonymous %}
+		<div class="go fl" id="go_b">
+			<img src="{{ STATIC_URL }}img/down.png" alt="" title="" class="go-icon" /><a href="">{% trans "Убедитесь в том, что это удобно!" %}</a>
+		</div>
+		{% endif %}
+		<div class="pr fr">&copy; 2011, <a href="http://{{ SITE.domain }}">{% trans "Кликер.ру" %}</a></div>
+	</div>
+</div>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://127.0.0.1:8000/" />
+<title>Тест: проверка пагинации при отправки ссылок в архив</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Тест: проверка пагинации при отправки ссылок в архив</td></tr>
+</thead><tbody>
+<!--Подготовка-->
+<tr>
+	<td>deleteCookie</td>
+	<td>sessionid</td>
+	<td></td>
+</tr>
+<!--Логинимся-->
+<tr>
+	<td>open</td>
+	<td>http://127.0.0.1:8000/a/login/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>username</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[value=&quot;Войти&quot;]</td>
+	<td></td>
+</tr>
+<!--Добавляем ссылки-->
+<!--10-->
+<tr>
+	<td>type</td>
+	<td>url</td>
+	<td>http://yandex.ru, http://rambler.ru, http://yandex.com, http://mail.ru, http://mail.com, http://bit.ly, http://google.ru, http://google.com, http://ya.ru, http://python.org</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>short</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>loading-status</td>
+	<td></td>
+</tr>
+<!--ещё одна-->
+<tr>
+	<td>type</td>
+	<td>url</td>
+	<td>http://sex.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>short</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>loading-status</td>
+	<td></td>
+</tr>
+<!--Проверяем пагинацию-->
+<tr>
+	<td>assertVisible</td>
+	<td>css=#links .paginator</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementIndex</td>
+	<td>css=#links .paginator</td>
+	<td>2</td>
+</tr>
+<!--Отправляем в архив-->
+<!--1-->
+<tr>
+	<td>click</td>
+	<td>//div[@id='links-list']/div[1]/div[6]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=В архив</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>loading-status</td>
+	<td></td>
+</tr>
+<!--2-->
+<tr>
+	<td>click</td>
+	<td>//div[@id='links-list']/div[1]/div[6]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=В архив</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>loading-status</td>
+	<td></td>
+</tr>
+<!--3-->
+<tr>
+	<td>click</td>
+	<td>//div[@id='links-list']/div[1]/div[6]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=В архив</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>loading-status</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>css=#links .paginator</td>
+	<td></td>
+</tr>
+<!--Пагинация должна исчезнуть-->
+<tr>
+	<td>assertNotVisible</td>
+	<td>css=#links .paginator</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans with user.username as username and SITE.name as obrez %}{{obrez}} :: Настройка профиля: {{ username }}{% endblocktrans %}{% endblock %}
+
+{% block headline %}{% blocktrans with user.username as username %}Настройка профиля: {{ username }}{% endblocktrans %}{% endblock %}
+
+{% block css %}
+	{{ block.super }}
+	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/profile{% if not debug %}.min{% endif %}.css" />
+	{% if debug %}
+		{{ avatar_form.media.css }}
+		{{ ch_pswd_form.media.css }}
+	{% endif %}
+{% endblock %}
+
+{% block js %}
+	{{ block.super }}
+	{% if debug %}
+		{{ avatar_form.media.js }}
+		{{ ch_pswd_form.media.js }}
+		<script type="text/javascript" src="{{ STATIC_URL }}js/lib.js"></script>
+	{% endif %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/profile{% if not debug %}.min{% endif %}.js"></script>
+{% endblock %}
+
+{% block data %}
+<div id="manage-avatar">
+	<h4>{% trans "Установите аватар" %}</h4>
+	{% include "forms/avatar_form.html" %}
+</div>
+<div id="share">
+	<h4>{% blocktrans with SITE.name as obrez %}Синхронизируйте свой {{ obrez }} аккаунт с другими сайтами{% endblocktrans %}</h4>
+	<p>{% blocktrans with SITE.name as obrez %}Делитесь своими ссылками с друзьями, подключите свои аккаунты из других сервисов к {{ obrez }}.{% endblocktrans %}</p>
+	<div class="nb">
+	<div id="services">
+	{% if services %}
+		<h5>{% blocktrans with SITE.name as obrez %}Вы дали {{ obrez }} доступ к своим аккаунтам, на сервисах:{% endblocktrans %}</h5>
+		{% for service in services %}
+			<p class="link"><b>{{ service.title }}:</b> {{ service.user_name }} <a class="toggle" href="{% url service_toggle service.slug %}">{% if service.active %}{% trans "Выключить" %}{% else %}{% trans "Включить" %}{% endif %}</a> <a href="{% url service_remove service.slug %}" class="remove">{% trans "Удалить" %}</a></p>
+		{% endfor %}
+	{% endif %}
+	</div>
+	<p id="share-links">{% trans "Подключить:"%} <a href="{% url twitter_get_auth_link %}">Twitter</a> <a href="{% url facebook %}">Facebook</a></p>
+	</div>
+</div>
+<h4>{% trans "Смена вашего пароля" %}</h4>
+<p>{% trans "При смене пароля, убедитесь в том, что вы сможете легко запомнить новый пароль и он доступен только вам.<br/>Старайтесь использовать в пароле цифры и буквы в разном регистре." %}</p>
+<form id="profile-password-change" action="{% url profile_password_change %}" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	{% for field in ch_pswd_form %}
+	<div class="field">
+		{{ field.label_tag }}
+		{{ field }}
+		{% if field.errors %}
+		<div class="error">{{ field.errors.0 }}</div>
+		{% endif %}
+	</div>
+	{% endfor %}
+	<div class="submit">
+		<input class="button dark corner c5" type="submit" value="{% trans "Изменить" %}" alt="{% trans "Изменить" %}" />
+	</div>
+</form>
+{% endblock %}
+<div class="aframe-bottom">{% include "footer.html" %}</div>

@@ -1,0 +1,50 @@
+/**
+ * Add link authenticated form
+ */
+#addLink{
+	width: 610px;
+}
+#id_url{
+	font-size: 1.3em;
+    height: 100px;
+    margin: 0;
+	padding: 10px;
+    width: 580px;
+	font-family: "Lucida Grande", Arial, Helvetica, sans-serif;
+    background-color: #FDFDEF;
+    border: 1px solid #EAE9E1;
+	resize: none;
+}
+#id_url:disabled,
+#id_url.busy{
+	background: url(/static/img/clock.gif) 561px 6px no-repeat;
+}
+#id_url.wrong{
+	background-color: red;
+}
+.submit{
+    height: 30px;
+    width: 600px;
+}
+.submit input{
+	margin-left:10px
+}
+#user-services ul{
+	list-style: none;
+	overflow: hidden;
+}
+#user-services ul li{
+	float: left;
+	height: 16px;
+	line-height: 16px;
+	margin: 0 5px 0 0;
+}
+#user-services .service-link{
+	background-position: left top;
+	width: 16px;
+	height: 16px;
+	display: block;
+}
+#user-services .service-link.inactive{
+	background-position: left bottom;
+}

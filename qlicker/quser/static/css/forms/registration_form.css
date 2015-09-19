@@ -1,0 +1,13 @@
+/**
+ * Registration form
+ */
+#reg-form{
+	max-width: 240px;
+}
+#reg-form .text{
+	width: 230px;
+}
+#reg-form .field input.text{
+	width: 230px;
+	
+}

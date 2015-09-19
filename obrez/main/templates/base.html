@@ -1,0 +1,59 @@
+{% load i18n sitemetrics %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>{% block title %}{{ SITE.name }} &mdash; {% trans "Создавай, Делись, Следи..." %}{% endblock %}</title>
+		{% block css %}
+			{% if debug %}
+				<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/base.css" />
+			{% endif %}
+		{% endblock %}
+		
+		{% block js %}
+			<script type="text/javascript" src="{{ STATIC_URL }}js/lang/{{ LANGUAGE_CODE }}{% if not debug %}.min{% endif %}.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery.min.js"></script>
+		{% endblock %}
+		
+		{% block metric %}
+			{% sitemetrics %}
+		{% endblock %}
+	</head>
+	<body>
+		<div id="header">
+		{% block header %}
+			<div id="head-logo"><a href="{% url index %}">{{ SITE.name }}</a></div>
+			{% if user.is_anonymous %}
+			<a class="button dark corner c5" href="{% url login %}" id="auth-btn" alt="{% trans "Войти" %}" title="{% trans "Войти" %}">{% trans "Войти" %}</a>
+			<a class="button dark corner c5" href="{% url registration %}" id="register-btn" alt="{% trans "Регистрация" %}" title="{% trans "Регистрация" %}">{% trans "Регистрация" %}</a>
+			{% else %}
+			<p class="welcome">{% blocktrans with user.username as username %}Привет, {{ username }}!{% endblocktrans %}</p>
+			<div id="user-menu">
+				<a href="{% url index %}" class="user-link">
+					<span class="avatar"><img src="{{ user.get_avatar }}" alt="" title="" /></span>
+					<span>{{ user.username }}</span>
+					<span class="arrow"></span>
+				</a>
+				<ul class="corner">
+					<li><a href="{% url profile %}">{% trans "Настройки профиля" %}</a></li>
+					<!--<li><a href="">{% trans "Публичная лента" %}</a></li>-->
+					<li><a href="{% url archive %}">{% trans "Архив ссылок" %}</a></li>
+					<li><a href="{% url help %}">{% trans "Справочный центр" %}</a></li>
+					<li><a href="{% url logout %}">{% trans "Выход" %}</a></li>
+				</ul>
+			</div>
+			{% endif %}
+		{% endblock %}
+		</div>
+		{% block content %}
+		<div id="content">
+			<div class="page">
+				<div class="headline">{% block headline %}{% endblock %}</div>
+				<div class="content">
+					{% block data%}{% endblock %}
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+	</body>
+</html>

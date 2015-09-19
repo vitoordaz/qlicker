@@ -1,0 +1,6 @@
+from change_password_form import ChagePasswordForm
+from load_avatar_form import LoadAvatarForm
+from login_form import LoginForm
+from password_reset_form import PasswordResetForm
+from registration_form import RegistrationForm
+from set_password_form import SetPasswordForm

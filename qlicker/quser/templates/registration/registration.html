@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block css %}
+	{{ block.super }}
+	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/registration{% if not debug %}.min{% endif %}.css" />
+	{% if debug %}
+		{{ form.media.css }}
+	{% endif %}
+{% endblock %}
+
+{% block js %}
+	{{ block.super }}
+	{% if debug %}
+		<script type="text/javascript" src="{{ STATIC_URL }}js/lib.js"></script>
+		{{ form.media.js }}
+	{% else %}
+		<script type="text/javascript" src="{{ STATIC_URL }}js/registration.min.js"></script>
+	{% endif %}
+{% endblock %}
+
+{% block header %}
+	<div id="head-logo"><a href="{% url index %}">QLIKER</a></div>
+	<a class="button dark corner c5" href="{% url login %}" id="auth-btn" alt="{% trans "Войти" %}" title="{% trans "Войти" %}">{% trans "Войти" %}</a>
+{% endblock %}
+
+{% block headline %}{% blocktrans with SITE.name as name %}Регистрация в {{ name }}{% endblocktrans %}{% endblock %}
+
+{% block data %}
+	<h3>{% trans "Зарегестрируйтесь, для того чтобы управлять своими ссылками" %}</h3>
+	<div id="reg-box" class="fl">
+	<p>{% trans "В случае успешной регистрации, на Ваш адресс электронной почты, мы отправим сообщение с кодом подтверждения регистрации." %}</p>
+	<form id="reg-form fl" action="." method="POST">
+		{% csrf_token %}
+		{% for field in form %}
+		<div class="field {% if field.name = "news" %}line{% endif %}">
+			{{ field.label_tag }}
+			{{ field }}
+			{% if field.errors %}
+			<div class="error">{{ field.errors.0 }}</div>
+			{% endif %}
+		</div>
+		{% endfor %}
+		<div class="submit">
+			<input class="button dark corner c5" type="submit" value="{% trans "Регистрация" %}" alt="{% trans "Регистрация" %}" />
+		</div>
+	</form>
+	</div>
+	<div id="info-box" class="fr">
+		<div class="promo-box">
+			<h5>Промо-бокс</h5>
+			<p>Тут будет размещаться текст, помогающий пользователю быть уверенным в правильности его действий!</p>
+		</div>
+	</div>	
+{% endblock %}

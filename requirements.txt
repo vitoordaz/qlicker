@@ -1,0 +1,5 @@
+Django==1.8.4
+BeautifulSoup==3.2.1
+PIL==1.1.7
+pillow==2.3.0
+qrcode==5.1

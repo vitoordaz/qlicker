@@ -1,0 +1,141 @@
+#info-body{
+	width: 1000px;
+	position: relative;
+	top: 40px;
+	left: 50%;
+	margin: 15px 0 0 -500px;
+	padding: 0 0 50px 0;
+	float:left;
+}
+h4{
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    width: 100%;
+}
+/**
+ * Click bar
+ */
+#click-bar.empty{
+    background: red;
+	text-align: center;
+	line-height: 300px;
+}
+#click-bar{
+	/*background: green;*/
+    width: 1000px;
+    height: 300px;
+	margin: 20px 0 0 0;
+	overflow: hidden;
+}
+#click-bar .axes{
+    border-color: #ccc;
+    border-style: solid;
+    border-width: 0 0 1px 1px;
+    overflow: hidden;
+    height: 260px;
+    width: 940px;
+    margin: 15px 0 0 0;
+    left: 45px;
+    position: absolute;
+}
+#click-bar .axes .hl{
+	background: #ccc;
+    height: 1px;
+    width: 940px;
+    position: absolute;
+}
+#click-bar .y{
+	position: absolute;
+	width: 45px;
+	margin: 15px 0 0 0;
+	height: 285px;
+    /*background: red;*/
+}
+#click-bar .x{
+    width: 940px;
+    height: 25px;
+    position: absolute;
+    left: 45px;
+	margin: 275px 0 0 0;
+    /*background: blue;
+	border-left: 1px solid white;*/
+}
+#click-bar .vt{
+	position: absolute;
+	width: 38px;
+	text-align: right;
+	font-size: 12px !important;
+}
+#click-bar .ht{
+	margin: 5px 0 0 0;
+    position: absolute;
+    font-size: 11px !important;
+	width: 67px;
+	overflow: hidden;
+}
+#click-bar .bar .bottom{
+	background: #1751a7;
+}
+/*
+ * QR Code
+ */
+.qr-code{
+	width:150px;
+	height:150px;
+	padding: 10px 15px 10px 15px;
+	background-color: #FDFDEF;
+	border: 1px solid #BADDEE;
+}
+.qr-code img{
+	width: 150px;
+	height: 150px;
+}
+/**
+ * Domains
+ */
+#domains-pie{
+	width:450px;
+	height:230px;
+	/*padding: 10px 15px 10px 15px;
+	background-color: #FDFDEF;
+	border: 1px solid #BADDEE;
+	overflow:hidden;*/
+}
+#domains-detail .oh .fl a{
+	text-decoration: none;
+}
+#domains-detail .referrers{
+	clear: both;
+}
+#domains-detail .referrers .oh{
+	border-bottom: none !important;
+}
+/**
+ * Countries
+ */
+#countries-pie{
+	width:450px;
+	height:230px;
+	/*padding: 10px 15px 10px 15px;
+	background-color: #FDFDEF;
+	border: 1px solid #BADDEE;
+	overflow:hidden;*/
+}
+#domains-detail .oh,
+#countries-detail .oh{
+	padding: 2px 0 2px 0;
+	margin: 2px 0 2px 0;
+	border-bottom: 1px solid #eee;
+}
+#domains-detail .oh .fl span,
+#countries-detail .oh .fl span{
+	margin-right: 7px;
+	font-weight: bold;
+    float: left;
+    overflow: hidden;
+    width: 20px;
+}
+.more{
+	text-align: center;
+	margin: 5px 0 0 0;
+}
