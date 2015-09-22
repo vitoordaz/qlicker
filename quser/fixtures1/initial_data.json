@@ -1,0 +1,27 @@
+[
+    {
+        "pk": "1",
+        "model": "auth.user",
+        "fields": {
+            "username": "admin",
+            "first_name": "admin",
+            "last_name": "admin",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "groups": [],
+            "user_permissions": [],
+            "password": "sha1$6efc0$f93efe9fd7542f25a7be94871ea45aa95de57161",
+            "email": "admin@qliker.ru"
+        }
+    },
+    {
+        "pk": "1",
+        "model": "QlickerUser",
+        "fields": {
+            "user_permissions": [],
+            "avatar": "",
+            "groups": []
+        }
+    }
+]

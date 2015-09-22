@@ -1,0 +1,70 @@
+{% load i18n staticfiles %}
+{% spaceless %}
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>{% block title %}{% if SITE %}{{ SITE.name }}{% else %}Qlicker{% endif %}{% endblock %}</title>
+
+  {% block css %}
+  <link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}"/>
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript"
+          src="{{ STATIC_URL }}js/lang/{{ LANGUAGE_CODE }}{% if not debug %}.min{% endif %}.js"></script>
+  <script type="text/javascript"
+          src="{{ STATIC_URL }}js/jquery/jquery.min.js"></script>
+  {% endblock %}
+</head>
+<body>
+<header>
+  <div class="container">
+    {% block header %}
+      <div class="fl">
+        <div class="logo"><a href="{% url 'index' %}">{% if SITE %}{{ SITE.name }}{% else %}Qlicker{% endif %}</a></div>
+      </div>
+      <div class="fr">
+        {% block header-right %}
+          {% if user.is_anonymous %}
+            <a id="auth-btn" href="{% url 'login' %}" title="{% trans 'Login' %}">{% trans "Login" %}</a>
+            <a id="register-btn" href="{% url 'registration' %}" title="{% trans 'Register' %}">{% trans "Register" %}</a>
+          {% else %}
+            <p class="welcome">
+              {% blocktrans with user.username as username %}Hi, {{ username }}!{% endblocktrans %}
+            </p>
+
+            <div id="user-menu">
+              <a href="{% url index %}" class="user-link">
+                <span class="avatar">
+                  <img src="{{ user.get_avatar }}" alt="" title=""/>
+                </span>
+                <span>{{ user.username }}</span>
+                <span class="arrow"></span>
+              </a>
+              <ul class="corner">
+                <li><a href="{% url profile %}">{% trans "Profile" %}</a></li>
+                <li><a href="{% url archive %}">{% trans "Archive" %}</a></li>
+                <li><a href="{% url help %}">{% trans "Help" %}</a></li>
+                <li><a href="{% url logout %}">{% trans "Logout" %}</a></li>
+              </ul>
+            </div>
+          {% endif %}
+        {% endblock %}
+      </div>
+    {% endblock %}
+  </div>
+</header>
+
+{% block content %}
+<div id="content">
+  <div class="page">
+    <div class="headline">{% block headline %}{% endblock %}</div>
+    <div class="content">
+      {% block data%}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+</body>
+</html>
+{% endspaceless %}

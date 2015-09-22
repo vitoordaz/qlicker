@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n staticfiles %}
+
+{% block css %}
+{{ block.super }}
+<link type="text/css" rel="stylesheet" href="{% static 'css/login.css' %}"/>
+{% if debug %}
+{{ form.media.css }}
+{% endif %}
+{% endblock %}
+
+{% block js %}
+{{ block.super }}
+{% if debug %}
+{{ form.media.js }}
+{% else %}
+<script type="text/javascript"
+        src="{{ STATIC_URL }}js/login{% if not debug %}.min{% endif %}.js"></script>
+{% endif %}
+{% endblock %}
+
+{% block header-right %}
+<a id="register-btn"
+   href="{% url 'registration' %}"
+   title="{% trans 'Register' %}">{% trans 'Register' %}</a>
+{% endblock %}
+
+{% block headline %}{% trans "Login" %}{% endblock %}
+
+{% block data %}
+<form id="login-form" action="." method="POST">
+  {% csrf_token %}
+  <div class="error">
+    {% if form.username.errors and form.password.errors %}
+      {{ form.non_field_errors.0 }}
+    {% else %}
+      {{ form.non_field_errors.0 }}
+      {{ form.errors.username.0 }}
+      {{ form.errors.password.0 }}
+    {% endif %}
+  </div>
+  {% for field in form %}
+    <div class="field">{{ field.label_tag }}{{ field }}</div>
+  {% endfor %}
+  <div class="oh">
+    <div class="fl submit">
+      <input class="button dark c5"
+             type="submit"
+             alt="{% trans 'Login' %}"
+             title="{% trans 'Login' %}"
+             value="{% trans 'Login' %}"/>
+    </div>
+    <div class="fl ml-10">
+      <a href="{% url 'password_reset' %}"
+         class="fl"
+         id="forgot"
+         title="{% trans 'Forgot password?' %}">
+        {% trans "Forgot password?" %}
+      </a>
+    </div>
+  </div>
+</form>
+{% endblock %}
