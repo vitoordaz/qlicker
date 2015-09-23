@@ -10,6 +10,7 @@ from qlicker.forms import set_password
 from qlicker.views import activation
 from qlicker.views import activation_abort
 from qlicker.views import index
+from qlicker.views import link
 from qlicker.views import login
 from qlicker.views import logout
 from qlicker.views import password_change
@@ -24,6 +25,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', index.index, name='index'),
+    url(r'^link/$', link.link, name='link'),
     url(r'^register/$', registration.registration, name='registration'),
     url(r'^register/complete/$', registration_complete.registration_complete,
         name='registration_complete'),

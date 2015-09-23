@@ -33,7 +33,7 @@ class AddLinkForm(forms.Form):
 
     def save(self):
         return link_model.Link.objects.get_or_create(
-            url=self.cleaned_data['url'], user=None)[0]
+            url=self.cleaned_data['url'], owner=None)[0]
 
 
 class AddLinkFormAuthenticated(forms.Form):
@@ -43,9 +43,6 @@ class AddLinkFormAuthenticated(forms.Form):
             'cols': 65,
             'rows': 3,
             'autocomplete': 'off'}))
-
-    class Media:
-        css = {'all': ('css/forms/add_link_form_authenticated.css',)}
 
     def __init__(self, operation=None, *args, **kwargs):
         self.operation = operation
@@ -73,7 +70,7 @@ class AddLinkFormAuthenticated(forms.Form):
             normalized_url = utils.normalize_url(url.group())
             if not QLINK_PATTERN.match(normalized_url):
                 obj, created = link_model.Link.objects.get_or_create(
-                    url=normalized_url, user=user)
+                    url=normalized_url, owner=user)
                 obj.recover()
                 obj.updated_now()
                 obj.save()

@@ -19,6 +19,8 @@ SECRET_KEY = '6vj0=100e%qi#r3n)v0o-z#d#5^2+8mw-hf&7lk0_*g2&6tdq6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SITE_URL = 'http://qlicker.co' if not DEBUG else 'http://127.0.0.1:8000'
+
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -87,7 +89,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -110,3 +112,11 @@ FB_CLIENT_SECRET = 'e4bc0be7df02efe78c926d5935dd28c6'
 FB_ACCESS_TOKEN_URI = 'http://127.0.0.1:8000/a/profile/fb/'
 FB_PERMISSIONS = 'publish_stream,offline_access'
 FB_PICTURE_TYPE = 'normal'  # small|normal|large
+
+# REGISTRATION options
+ACTIVATION_DAYS = 14  # 2 weeks
+DEFAULT_FROM_EMAIL = 'noreply@qlicker.co'
+
+# AUTH options
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/a/login/'

@@ -2,3 +2,6 @@
 db.sqlite3
 *.pyc
 .DS_Store
+tmp
+bower_components
+node_modules

@@ -1,17 +1,10 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n staticfiles %}
 
-{% block title %}{% trans "Регистрация прошла успешно" %}{% endblock %}
+{% block title %}{% trans "Registration completed" %}{% endblock %}
 
-{% block css %}
-<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/base.css" />
-{% endblock %}
-
-{% block js %}
-{% endblock %}
-
-{% block headline %}{% trans "Регистрация прошла успешно" %}{% endblock %}
+{% block headline %}{% trans "Registration completed" %}{% endblock %}
 
 {% block data %}
-{% trans "Регистрация прошла успешно, на указанный Вами адрес электронной почты было отправлено сообщение с ключом активации." %}
+{% trans "Registration completed successfuly, an email with an activation key was sent to your email address." %}
 {% endblock %}

@@ -1,17 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}Ошибка в ходе регистрации{% endblock %}
+{% block title %}{% trans "Registration error" %}{% endblock %}
 
-{% block css %}
-<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/base.css" />
-{% endblock %}
-
-{% block js %}
-{% endblock %}
-
-{% block headline %}{% trans "Ошибка" %}{% endblock %}
+{% block headline %}{% trans "Error" %}{% endblock %}
 
 {% block data %}
-{% trans "В ходе регистрации произошла ошибка." %}
+{% trans "Registration error, please try again." %}
 {% endblock %}

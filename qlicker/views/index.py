@@ -77,19 +77,21 @@ def index_authenticated(request):
 
 def index_anonymous(request):
     """Index page for anonymous users."""
-    if request.method == 'POST':
+    if request.method == 'GET':
+        form = add_link_form.AddLinkForm()
+    else:
         form = add_link_form.AddLinkForm(request.POST)
-        if form.is_valid():
+        if not form.is_valid():
+            if request.is_ajax():
+                return HttpResponse(json.dumps({'error': form.errors}),
+                                    status=400, mimetype=r'application/json')
+        else:
             l = form.save()
             t = request.session.get('links', [])
             if l not in t:
                 t.insert(0, l)
                 request.session['links'] = t
-        elif request.is_ajax():
-            return HttpResponse(json.dumps({'error': form.errors}),
-                                mimetype=r'application/json')
-    else:
-        form = add_link_form.AddLinkForm()
+
     p = Paginator(request.session.get('links', []), 10)
     try:
         page = int(request.GET.get('p', '1'))

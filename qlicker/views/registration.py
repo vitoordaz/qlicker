@@ -14,9 +14,9 @@ def registration(request):
         return http.HttpResponseRedirect('/')
     if request.is_ajax():
         if request.method == 'GET':
-            if 'login' in request.GET:
+            if 'username' in request.GET:
                 try:
-                    models.User.objects.get(username=request.GET['login'])
+                    models.User.objects.get(username=request.GET['username'])
                     return http.HttpResponse(
                         _(u'User with a given username already exist'),
                         status=400)

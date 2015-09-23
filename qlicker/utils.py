@@ -1,7 +1,12 @@
+import datetime
 import os
 import threading
 import urllib2
 import urlparse
+
+
+# Date for timestamp of the epoch.
+EPOCH = datetime.datetime.utcfromtimestamp(0)
 
 
 def download_service_avatar(filename, url):
@@ -60,3 +65,16 @@ def normalize_url(url):
     if not url[2]:
         url[2] = '/'
     return urlparse.urlunsplit(url)
+
+
+def datetime2timestamp(dv):
+  if not dv:
+    return
+  if isinstance(dv, datetime.datetime):
+    delta = dv - EPOCH
+  else:
+    delta = dv - EPOCH.date()
+  millis = ((delta.days * 24 * 60 * 60 * 1000) +
+            (delta.seconds * 1000) +
+            (delta.microseconds / 1000))
+  return millis

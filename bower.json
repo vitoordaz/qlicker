@@ -1,0 +1,20 @@
+{
+  "name": "qlicker",
+  "version": "0.0.1",
+  "authors": [
+    "Victor Rodionov <vito.ordaz@gmail.com>"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "backbone": "latest",
+    "jquery": "latest",
+    "underscore": "latest",
+    "underscore.string": "3.2.2",
+    "requirejs": "latest"
+  }
+}

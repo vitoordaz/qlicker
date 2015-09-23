@@ -6,14 +6,11 @@
   <title>{% block title %}{% if SITE %}{{ SITE.name }}{% else %}Qlicker{% endif %}{% endblock %}</title>
 
   {% block css %}
-  <link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/main.min.css' %}"/>
   {% endblock %}
 
   {% block js %}
-  <script type="text/javascript"
-          src="{{ STATIC_URL }}js/lang/{{ LANGUAGE_CODE }}{% if not debug %}.min{% endif %}.js"></script>
-  <script type="text/javascript"
-          src="{{ STATIC_URL }}js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/main.min.js' %}"></script>
   {% endblock %}
 </head>
 <body>
@@ -21,33 +18,30 @@
   <div class="container">
     {% block header %}
       <div class="fl">
-        <div class="logo"><a href="{% url 'index' %}">{% if SITE %}{{ SITE.name }}{% else %}Qlicker{% endif %}</a></div>
+        {% block header-logo %}
+          <div class="logo">
+            <a href="{% url 'index' %}">{% if SITE %}{{ SITE.name }}{% else %}Qlicker{% endif %}</a>
+          </div>
+        {% endblock %}
       </div>
       <div class="fr">
         {% block header-right %}
           {% if user.is_anonymous %}
-            <a id="auth-btn" href="{% url 'login' %}" title="{% trans 'Login' %}">{% trans "Login" %}</a>
-            <a id="register-btn" href="{% url 'registration' %}" title="{% trans 'Register' %}">{% trans "Register" %}</a>
+            <a href="{% url 'login' %}" title="{% trans 'Login' %}">{% trans "Login" %}</a>
+            <a class="ml-10" href="{% url 'registration' %}" title="{% trans 'Register' %}">{% trans "Register" %}</a>
           {% else %}
-            <p class="welcome">
-              {% blocktrans with user.username as username %}Hi, {{ username }}!{% endblocktrans %}
-            </p>
-
-            <div id="user-menu">
-              <a href="{% url index %}" class="user-link">
-                <span class="avatar">
-                  <img src="{{ user.get_avatar }}" alt="" title=""/>
-                </span>
-                <span>{{ user.username }}</span>
-                <span class="arrow"></span>
-              </a>
-              <ul class="corner">
-                <li><a href="{% url profile %}">{% trans "Profile" %}</a></li>
-                <li><a href="{% url archive %}">{% trans "Archive" %}</a></li>
-                <li><a href="{% url help %}">{% trans "Help" %}</a></li>
-                <li><a href="{% url logout %}">{% trans "Logout" %}</a></li>
-              </ul>
-            </div>
+            <span>{% blocktrans with user.username as username %}Hi, {{ username }}!{% endblocktrans %}</span>
+<!--             <a href="{% url 'index' %}" class="user-link">
+              <span class="avatar">
+                <img src="{{ user.get_avatar }}" alt="" title=""/>
+              </span>
+              <span>{{ user.username }}</span>
+              <span class="arrow"></span>
+            </a> -->
+            <a class="ml-10" href="{% url 'profile' %}">{% trans "Profile" %}</a>
+              {# <li><a href="{% url 'archive' %}">{% trans "Archive" %}</a></li> #}
+              {# <li><a href="{% url 'help' %}">{% trans "Help" %}</a></li> #}
+            <a class="ml-10" href="{% url 'logout' %}">{% trans "Logout" %}</a>
           {% endif %}
         {% endblock %}
       </div>
@@ -56,14 +50,16 @@
 </header>
 
 {% block content %}
-<div id="content">
-  <div class="page">
-    <div class="headline">{% block headline %}{% endblock %}</div>
-    <div class="content">
-      {% block data%}{% endblock %}
+<main>
+  <div class="container">
+    <div class="page">
+      <div class="headline">{% block headline %}{% endblock %}</div>
+      <div class="content">
+        {% block data %}{% endblock %}
+      </div>
     </div>
   </div>
-</div>
+</main>
 {% endblock %}
 </body>
 </html>

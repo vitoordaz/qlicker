@@ -1,0 +1,97 @@
+// Common style
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    outline: none;
+  }
+}
+a img {
+  border: none !important;
+}
+html {
+  height: 100%;
+}
+body {
+  font-family: Helvetica, Tahoma, Arial, serif;
+  font-size: 81.2%;
+  min-height: 100%;
+  height: 100%;
+  background:  url("/static/img/bg.png") repeat scroll 0 0 transparent
+}
+p {
+  margin:10px 0;
+}
+.block {
+  display: block;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.cb {
+  clear: both;
+}
+.oh {
+  overflow: hidden;
+}
+.dc {
+  margin: 0 auto;
+}
+.pr {
+  position: relative;
+}
+.hidden {
+  display: none;
+}
+.tc {
+  text-align: center;
+}
+.container {
+  width: 900px;
+  overflow: hidden;
+}
+.ml-10 {
+  margin-left: 10px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
+main {
+  margin-top: 60px;
+  padding-left: 50%;
+  .container {
+    margin-left: -450px;
+  }
+}
+.page {
+  .headline {
+    height: 40px;
+    padding: 0 15px;
+    line-height: 40px;
+    background: #e4edf5;
+    font-size: 1.3em;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 5px 5px 0 0;
+       -moz-border-radius: 5px 5px 0 0;
+            border-radius: 5px 5px 0 0;
+  }
+  .content {
+    padding: 10px 15px 30px 15px;
+    border-top: none;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    -webkit-border-radius: 0 0 5px 5px;
+       -moz-border-radius:  0 0 5px 5px;
+            border-radius: 0 0 5px 5px;
+    margin-bottom: 30px;
+    background: #FFFFFF;
+  }
+}

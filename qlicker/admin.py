@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from qlicker.models import facebook
+from qlicker.models import link
 from qlicker.models import registration_profile
 from qlicker.models import twitter
 
@@ -20,3 +21,10 @@ class TwitterAdmin(admin.ModelAdmin):
 
 
 admin.site.register(twitter.Twitter, TwitterAdmin)
+
+
+class LinkAdmin(admin.ModelAdmin):
+    list_display = ('url', 'owner', 'created_at')
+
+
+admin.site.register(link.Link, LinkAdmin)

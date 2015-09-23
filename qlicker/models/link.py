@@ -1,6 +1,5 @@
 import re
 import urllib
-import json
 import datetime
 
 from django.db import models
@@ -25,13 +24,11 @@ class LinksManager(models.Manager):
 
     def archived(self, user):
         q = self.filter(archived=True).order_by('-updated_at')
-        q = q.filter(user=user)
-        return q
+        return q.filter(owner=user)
 
     def for_user(self, user):
         q = self.filter(archived=False).order_by('-updated_at')
-        q = q.filter(user=user)
-        return q
+        return q.filter(owner=user)
 
 
 class Link(models.Model):
@@ -46,12 +43,14 @@ class Link(models.Model):
                                     help_text=_('Number of redirects'),
                                     null=True)
 
-    user = models.ForeignKey(auth_models.User, verbose_name=_('Owner'),
-                             null=True, blank=True)
+    owner = models.ForeignKey(auth_models.User, verbose_name=_('Owner'),
+                              null=True, blank=True)
 
-    created_at = models.DateTimeField(verbose_name=_('Created at'))
+    created_at = models.DateTimeField(verbose_name=_('Created at'),
+                                      auto_now=True)
 
-    updated_at = models.DateTimeField(verbose_name=_('Updated at'))
+    updated_at = models.DateTimeField(verbose_name=_('Updated at'),
+                                      auto_now=True)
 
     title = models.CharField(verbose_name=_('URL title'), max_length=150,
                              blank=True, null=True)
@@ -71,15 +70,15 @@ class Link(models.Model):
         super(Link, self).__init__(*args, **kwargs)
 
     def __unicode__(self):
-        return u"%s" % self.url
+        return str(self.url)
 
     @property
     def favicon(self):
-        return "%sfavicon/%s.png" % (settings.MEDIA_URL, self.code)
+        return '%sfavicon/%s.png' % (settings.MEDIA_URL, self.code)
 
     @property
     def qlink(self):
-        return "%s/%s" % (settings.SITE_URL, self.code)
+        return '%s/%s' % (settings.SITE_URL, self.code)
 
     @property
     def long(self):
@@ -88,11 +87,8 @@ class Link(models.Model):
     def set_title(self, title):
         self.title = mark_for_escaping(title)
 
-    def archive(self):
-        self.inarchive = True
-
     def recover(self):
-        self.inarchive = False
+        self.archived = False
 
     def updated_now(self):
         self.updated_at = datetime.datetime.utcnow()
@@ -114,18 +110,13 @@ class Link(models.Model):
             #     m.start()
             super(Link, self).save()
 
-
-class LinksJSONEncoder(json.JSONEncoder):
-
-    def default(self, link):
-        if not isinstance (link, Link):
-            raise ValueError('You cannot use the JSON custom LinksJSONEncoder '
-                             'for a non-Links object.')
+    def to_json(self):
         return {
-            'url': link.url,
-            'qlink': link.qlink,
-            'favicon': link.favicon,
-            'title': link.title,
-            'date': str(link.date),
-            'redirects': link.redirects
+            'id': self.id,
+            'url': self.url,
+            'qlink': self.qlink,
+            'favicon': self.favicon,
+            'title': self.title,
+            'created_at': utils.datetime2timestamp(self.created_at),
+            'redirects': self.redirects
         }
