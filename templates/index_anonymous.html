@@ -13,32 +13,8 @@ var curPage = {{ links.number }};
 
 {% block content %}
 <main>
-  {% comment %}
-  <div id="auth-form" class="corner c5">
-    <form id="login-form" action="{% url 'login' %}" method="POST" enctype="multipart/form-data">
-      <fieldset>
-        {% csrf_token %}
-        {% for field in auth_form %}
-        <div class="field">{{ field.label_tag }} {{ field }}</div>
-        {% endfor %}
-        <div class="error"></div>
-        <div class="oh">
-          <div class="fl">
-            <input type="submit" value="{% trans 'Login' %}" alt="{% trans 'Login' %}" title="{% trans 'Login' %}"/>
-          </div>
-          <div class="fl">
-            <a href="{% url 'password_reset' %}" class="fl" id="forgot"
-               title="{% trans 'Password recovery' %}">{% trans 'Forget password?'
-              %}</a>
-          </div>
-        </div>
-      </fieldset>
-    </form>
-  </div>
-  {% endcomment %}
-
   <div id="add-link-view" class="container">
-    <h1 class="tc mb-10">
+    <h1 class="tc mb-20">
       <a href="{% url 'index' %}">
         <img src="{% static 'img/logo.png' %}" alt="{{ SITE.name }}" title="{{ SITE.name }}"/>
       </a>
@@ -47,65 +23,25 @@ var curPage = {{ links.number }};
     <form id="add-link-anonymous-view" action="{% url 'link' %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <input type="text" name="{{ form.url.name }}" autocomplete="off"/>
-      <input type="submit" value="{% trans 'Submit' %}" alt="{% trans 'Submit' %}" title="{% trans 'Submit' %}"/>
+      <input type="submit" value="{% trans 'Shorten' %}" alt="{% trans 'Shorten' %}" title="{% trans 'Shorten' %}"/>
       <div class="error"></div>
     </form>
 
     <script id="link-template" type="template/html">
-      <div class="short"><a href="<%= qlink %>"><%= qlink %></a></div>
-      <div class="params"><a href="">{% trans "Info" %}</a></div>
-      <div class="long"><a href="<%= url %>"><%= url %></a></div>
+      <div class="fl short"><a href="<%= qlink %>"><%= qlink %></a></div>
+      <div class="fl long"><a href="<%= url %>"><%= url %></a></div>
+      <div class="fl params"><a href="<%= qlink %>.info">{% trans "Info" %}</a></div>
     </script>
 
     <div class="links-wrapper hidden">
       <div class="links">
         <div class="header">
-          <div class="short">{% trans "Short URL" %}</div>
-          <div class="long">{% trans "Original URL" %}</div>
+          <div class="fl short">{% trans "Short URL" %}</div>
+          <div class="fl long">{% trans "Original URL" %}</div>
         </div>
-        <div class="items">
-        </div>
+        <div class="items"></div>
       </div>
     </div>
-
-    {% comment %}
-    {% if links.object_list %}
-      <div id="links" class="corner c5">
-        <div id="links-head" class="oh">
-          <div class="short">{% trans "Short URL" %}</div>
-          <div class="long">{% trans "Original URL" %}</div>
-        </div>
-        <div id="links-list">
-          {% for link in links.object_list %}
-          <div class="link oh" code="{{ link.code }}">
-            <div class="short">
-              <a href="http://{{ SITE.domain }}{% url 'redirect' link.code %}">http://{{ SITE.domain }}{% url 'redirect' link.code %}</a>
-            </div>
-            <div class="params">
-              <a href="http://{{ SITE.domain }}{% url 'info' link.code %}" class="stat-l">{% trans "Statistic" %}</a>
-              <a href="#">{% trans "Copy" %}</a>
-            </div>
-            <div class="long">
-              <a href="{{ link.long }}">{{ link.long }}</a>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        {% if links.has_other_pages %}
-          <div class="paginator">
-            <a href="?p=1#links" class="first"></a>
-            <a href="?p={% if links.previous_page_number = 0 %}1{% else %}{{ links.previous_page_number }}{% endif %}#links" class="previous"></a>
-            <div class="center">
-              {% blocktrans with links.number as number and links.paginator.num_pages as num_pages %}{{ number }} of {{ num_pages }}{% endblocktrans %}
-            </div>
-            <a href="?p={% if links.next_page_number > links.paginator.num_pages %}{{ links.paginator.num_pages }}{% else %}{{ links.next_page_number }}{% endif %}#links"
-               class="next"></a>
-            <a href="?p={{ links.paginator.num_pages }}#links" class="last"></a>
-          </div>
-        {% endif %}
-      </div>
-    {% endif %}
-    {% endcomment %}
   </div>
 </main>
 {% endblock %}

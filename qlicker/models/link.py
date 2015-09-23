@@ -47,7 +47,7 @@ class Link(models.Model):
                               null=True, blank=True)
 
     created_at = models.DateTimeField(verbose_name=_('Created at'),
-                                      auto_now=True)
+                                      auto_now_add=True)
 
     updated_at = models.DateTimeField(verbose_name=_('Updated at'),
                                       auto_now=True)
@@ -93,8 +93,8 @@ class Link(models.Model):
     def updated_now(self):
         self.updated_at = datetime.datetime.utcnow()
 
-    def inc_counter(self):
-        self.counter += 1
+    def increment_redirects(self):
+        self.redirects += 1
 
     def save(self, **kwargs):
         super(Link, self).save(**kwargs)

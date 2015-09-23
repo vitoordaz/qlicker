@@ -1,49 +1,32 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% blocktrans with link.qlink as qlink %}{{ qlink }} &mdash; Статистика{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with link.qlink as qlink %}{{ qlink }} &mdash; Info{% endblocktrans %}{% endblock %}
 
-{% block headline %}{% blocktrans with link.qlink as qlink %}{{ qlink }} &mdash; Статистика{% endblocktrans %}{% endblock %}
+{% block headline %}{% blocktrans with link.qlink as qlink %}{{ qlink }} &mdash; Info{% endblocktrans %}{% endblock %}
 
-{% block css %}
-{{ block.super }}
-<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/info{% if not debug %}.min{% endif %}.css"/>
-{% endblock %}
-
-{% block js %}
-{{ block.super }}
-<script type="text/javascript">
-var code = '{{ link.code }}';
-</script>
-<script type="text/javascript"
-        src="{{ STATIC_URL }}js/graf/raphael.min.js"></script>
-<script type="text/javascript"
-        src="{{ STATIC_URL }}js/graf/g.raphael.min.js"></script>
-<script type="text/javascript"
-        src="{{ STATIC_URL }}js/graf/g.pie{% if not debug %}.min{% endif %}.js"></script>
-<script type="text/javascript"
-        src="{{ STATIC_URL }}js/info{% if not debug %}.min{% endif %}.js"></script>
-{% endblock %}
-
-{% block content %}
-<div id="info-body">
-    <h3>{{ link.counter }} переходов по Qlink <a href="{{ link.qlink }}">{{
-        link.qlink }}</a> &mdash; начиная с {{ link.created_at|date:"d M Y" }}
+{% block data %}
+  <div id="link-info-view">
+    <h3>
+      {% blocktrans with link.redirects as redirects and link.qlink as qlink and link.created_at as created_at %}
+        {{ redirects }} redirects for <a href="{{ qlink }}">{{ qlink }}</a> &mdash; from {{ created_at }}
+      {% endblocktrans %}
     </h3>
-    <h4 class="noborder"><img src="{{ link.favicon }}" alt="" title=""/> {{ link.title }}</h4>
 
+    {% if link.title  %}
+      <h4 class="noborder"><img src="{{ link.favicon }}" alt="" title=""/> {{ link.title }}</h4>
+    {% endif %}
+
+    {% comment %}
     <div class="qr-code">
-        <a href="{% url qrcode link.code %}">
-            <img src="{% url qrcode link.code %}" alt="{% trans 'QR code' %}" title="{% trans 'QR код' %}" />
-        </a>
+    <a href="{% url qrcode link.code %}"><img src="{% url qrcode link.code %}" alt="{% trans 'QR code' %}" title="{% trans 'QR код' %}" /></a>
     </div>
+    {% endcomment %}
+
+    <div class="oh"><div id="click-bar"></div></div>
     <div class="oh">
-        <div id="click-bar"></div>
+    <div class="fl" id="domains"></div>
+    <div class="fr" id="countries"></div>
     </div>
-    <div class="oh">
-        <div class="fl" id="domains"></div>
-        <div class="fr" id="countries"></div>
-    </div>
-</div>
-<div class="aframe-bottom">{% include "footer.html" %}</div>
+  </div>
 {% endblock %}

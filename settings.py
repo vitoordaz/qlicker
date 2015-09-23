@@ -3,6 +3,8 @@ import os
 import sys
 
 
+SITE_ID = 1
+
 PROJECT_DIR = os.path.dirname(__file__)
 sys.path.insert(0, PROJECT_DIR)
 
@@ -32,6 +34,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'qlicker',
 )
 
@@ -59,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'qlicker.context_processors.site',
             ],
         },
     },
@@ -120,3 +124,8 @@ DEFAULT_FROM_EMAIL = 'noreply@qlicker.co'
 # AUTH options
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/a/login/'
+
+# GEOIP_SETTINGS
+GEOIP_COUNTRY_FILE = os.path.join(PROJECT_DIR, 'tmp', 'GeoIPCountryWhois.csv')
+GEOIP_DB_URL = ('http://geolite.maxmind.com/download/geoip/database/'
+                'GeoIPCountryCSV.zip')

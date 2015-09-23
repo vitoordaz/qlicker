@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from qlicker.main.models import country
+from qlicker.models import country
 
 
 class GeoIPdbManager(models.Manager):

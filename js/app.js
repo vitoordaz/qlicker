@@ -5,10 +5,11 @@ define([
   'Backbone',
   './utils',
   'view/add_link',
+  'view/info',
   'view/login',
   'view/register',
   'view/password_reset'
-], function($, Backbone, utils, AddLinkView, LoginView, RegisterView,
+], function($, Backbone, utils, AddLinkView, InfoView, LoginView, RegisterView,
             PasswordResetView) {
   'use strict';
   function App() {}
@@ -18,15 +19,16 @@ define([
     var view;
     if (path === '/') {
       view = new AddLinkView({el: $('#add-link-view')});
-      view.render();
     } else if (path === '/login') {
       view = new LoginView({el: $('#login-view')});
-      view.render();
     } else if (path === '/register') {
       view = new RegisterView({el: $('#register-view')});
-      view.render();
     } else if (path === '/password/reset') {
       view = new PasswordResetView({el: $('#password-reset-view')});
+    } else if (/^\/[a-zA-Z0-9]+.info$/.test(path)) {
+      view = new InfoView({el: $('#link-info-view')});
+    }
+    if (view) {
       view.render();
     }
   };

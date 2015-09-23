@@ -15,4 +15,4 @@ class Country(models.Model):
         ordering = ('name', )
 
     def __unicode__(self):
-        return u"%s (%s)" % (self.name, self.code)
+        return '%s (%s)' % (self.name, self.code)

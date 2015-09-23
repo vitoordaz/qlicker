@@ -10,22 +10,26 @@ from qlicker.forms import set_password
 from qlicker.views import activation
 from qlicker.views import activation_abort
 from qlicker.views import index
+from qlicker.views import info
 from qlicker.views import link
 from qlicker.views import login
 from qlicker.views import logout
 from qlicker.views import password_change
 from qlicker.views import password_reset as password_reset_view
 from qlicker.views import profile
+from qlicker.views import redirect
 from qlicker.views import registration
 from qlicker.views import registration_complete
 from qlicker.views import registration_error
 
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/?', include(admin.site.urls)),
 
     url(r'^$', index.index, name='index'),
     url(r'^link/$', link.link, name='link'),
+    url(r'^link/(?P<code>[0-9a-zA-Z]+)/stat$', link.link_stat,
+        name='link_stat'),
     url(r'^register/$', registration.registration, name='registration'),
     url(r'^register/complete/$', registration_complete.registration_complete,
         name='registration_complete'),
@@ -66,4 +70,7 @@ urlpatterns = [
     # url(r'^profile/fb/$', views.facebook, name='facebook'),
     # url(r'^profile/(?P<service>\w+)/remove/$', views.service_remove, name='service_remove'),
     # url(r'^profile/(?P<service>\w+)/toggle/$', views.service_toggle, name='service_toggle'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + [
+    url(r'^(?P<code>[0-9a-zA-Z]+)$', redirect.redirect, name='redirect'),
+    url(r'^(?P<code>[0-9a-zA-Z]+).info$', info.info, name='info'),
+]

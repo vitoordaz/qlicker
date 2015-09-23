@@ -7,15 +7,18 @@ define([
   'underscore',
   'underscore.string',
   'utils',
-  'collection/link'
-], function($, Backbone, _, s, utils, LinkList) {
+  'collection/link',
+  'model/link'
+], function($, Backbone, _, s, utils, LinkList, Link) {
   'use strict';
 
   var LinkView = Backbone.View.extend({
     tagName: 'div',
-    template: _.template($('#link-template').html()),
+    template: function() {
+      return _.template($('#link-template').html());
+    },
     render: function() {
-      this.$el.html(this.template(this.model.toJSON()));
+      this.$el.html(this.template()(this.model.attributes));
       this.$el.addClass('link');
       return this;
     }
@@ -29,19 +32,18 @@ define([
     initialize: function() {
       this.links = new LinkList();
       this.listenTo(this.links, 'all', this.render.bind(this));
-      // this.listenTo(this.links, 'add', this.addLink.bind(this));
+      this.listenTo(this.links, 'add', this.addLink.bind(this));
       this.links.fetch();
     },
     render: function() {
       if (this.links.total > 0) {
         this.$('.links-wrapper').show();
+        this.$('.links .items').html('');
+        this.links.each(this.addLink, this);
       }
-      this.$('.links .items').html('');
-      this.links.each(this.addLink, this);
       return this;
     },
     addLink: function(link) {
-      console.info(link);
       var view = new LinkView({model: link});
       this.$('.links .items').append(view.render().el);
     },
@@ -67,12 +69,18 @@ define([
         $url.addClass('invalid');
       } else {
         $url.removeClass('invalid');
-        this.links.create({url: url});
+        var link = new Link({url: url});
+        link.save(null, {
+          success: function() {
+            $url.val('');
+            this.links.fetch();
+          }.bind(this)
+        });
       }
     },
     hideError: function(e) {
       this.$(e.target).removeClass('invalid');
-      this.$('form .error').text('').hide();
+      this.$('form .error').text('');
     }
   });
 });

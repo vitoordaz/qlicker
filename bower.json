@@ -11,7 +11,8 @@
     "bower_components"
   ],
   "dependencies": {
-    "backbone": "latest",
+    "backbone": "1.2.3",
+    "d3": "latest",
     "jquery": "latest",
     "underscore": "latest",
     "underscore.string": "3.2.2",

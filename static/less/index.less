@@ -1,31 +1,70 @@
-#add-link-anonymous-view {
-  text-align: center;
-  input[type=text] {
-    height: 42px;
-    width: 460px;
-    font-size: 18px;
-    padding: 5px 0 5px 9px;
-    border-right: none !important;
-    -webkit-border-radius: 5px 0 0 5px;
-    -moz-border-radius: 5px 0 0 5px;
-    border-radius: 5px 0 0 5px;
+#add-link-view {
+  #add-link-anonymous-view {
+    text-align: center;
+    input[type=text] {
+      height: 42px;
+      width: 460px;
+      font-size: 18px;
+      padding: 5px 0 5px 9px;
+      border-right: none !important;
+      -webkit-border-radius: 5px 0 0 5px;
+      -moz-border-radius: 5px 0 0 5px;
+      border-radius: 5px 0 0 5px;
+    }
+    input[type=submit] {
+      height: 42px;
+      width: 130px;
+      font-size: 16px;
+      -webkit-border-radius: 0 5px 5px 0;
+      -moz-border-radius: 0px 5px 5px 0;
+      border-radius: 0px 5px 5px 0;
+    }
+    .error {
+      margin-top: 5px;
+    }
   }
-  input[type=submit] {
-    height: 42px;
-    width: 130px;
-    font-size: 16px;
-    -webkit-border-radius: 0 5px 5px 0;
-    -moz-border-radius: 0px 5px 5px 0;
-    border-radius: 0px 5px 5px 0;
-  }
-  .error {
-    margin-top: 5px;
-  }
-}
-.links-wrapper {
-  padding-left: 50%;
-  .links {
-    width: 460px + 130px;
-    margin-left: -(460px + 130px) / 2;
+  .links-wrapper {
+    padding-left: 50%;
+    .links {
+      width: 460px + 130px;
+      margin-left: -(460px + 130px) / 2;
+      .header {
+        overflow: hidden;
+        font-weight: bold;
+        border-bottom: 1px solid #d8e1e9;
+        height: 35px;
+        color: #888;
+        font-size: 13px;
+        padding: 0 10px;
+        .fl {
+          line-height: 37px;
+          &.short {
+            width: 250px;
+          }
+        }
+      }
+      .items {
+        .link {
+          height: 30px;
+          line-height: 30px;
+          padding: 0 10px;
+          overflow: hidden;
+          border-bottom: 1px solid #d8e1e9;
+          &:nth-child(2n){
+            background-color: #f4f4f4;  /*! for js*/
+          }
+          .short {
+            width: 250px;
+          }
+          .params {
+            width: 50px;
+            text-align: right;
+          }
+          .long {
+            width: (460px + 130px) - (250px + 50px) - 20px;
+          }
+        }
+      }
+    }
   }
 }

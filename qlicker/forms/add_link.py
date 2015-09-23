@@ -32,8 +32,8 @@ class AddLinkForm(forms.Form):
             return url
 
     def save(self):
-        return link_model.Link.objects.get_or_create(
-            url=self.cleaned_data['url'], owner=None)[0]
+        return link_model.Link.objects.create(url=self.cleaned_data['url'],
+                                              owner=None)
 
 
 class AddLinkFormAuthenticated(forms.Form):
@@ -69,11 +69,8 @@ class AddLinkFormAuthenticated(forms.Form):
         for url in match:
             normalized_url = utils.normalize_url(url.group())
             if not QLINK_PATTERN.match(normalized_url):
-                obj, created = link_model.Link.objects.get_or_create(
-                    url=normalized_url, owner=user)
-                obj.recover()
-                obj.updated_now()
-                obj.save()
+                obj = link_model.Link.objects.create(url=normalized_url,
+                                                     owner=user)
                 objects['added'].append({
                     'code': obj.code,
                     'qlink': obj.qlink,
