@@ -134,3 +134,8 @@ GEOIP_DB_URL = ('http://geolite.maxmind.com/download/geoip/database/'
 QR_CODES_BUCKET = 'qlicker-qr-codes'
 
 MAX_FOR_DOWNLOAD = 300 * 1024  # 300Kb
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

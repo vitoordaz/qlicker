@@ -6,3 +6,4 @@ tmp
 bower_components
 node_modules
 .venv
+local_settings.py
