@@ -30,7 +30,9 @@ module.exports = function(grunt) {
           layout: function(type, component, source) {
             switch (component) {
               case 'backbone':
+              case 'd3':
               case 'jquery':
+              case 'moment':
               case 'underscore':
               case 'underscore.string':
               case 'requirejs':
@@ -81,7 +83,9 @@ module.exports = function(grunt) {
           out: 'tmp/js/main.js',
           paths: {
             Backbone: here('js', 'third_party', 'backbone'),
+            d3: here('js', 'third_party', 'd3'),
             jquery: here('js', 'third_party', 'jquery'),
+            moment: here('js', 'third_party', 'moment'),
             underscore: here('js', 'third_party', 'underscore'),
             'underscore.string': here('js', 'third_party', 'underscore.string')
           }

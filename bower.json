@@ -14,6 +14,7 @@
     "backbone": "1.2.3",
     "d3": "latest",
     "jquery": "latest",
+    "moment": "latest",
     "underscore": "latest",
     "underscore.string": "3.2.2",
     "requirejs": "latest"
