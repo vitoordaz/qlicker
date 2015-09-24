@@ -142,6 +142,3 @@ def get_link_meta(link):
     except urllib2.URLError:
         return
     link.save()
-    # get_favicon(favicon_url, link.url, '%s.png' % link.code)
-    # if not link.user:
-    #     link.save()

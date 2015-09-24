@@ -105,14 +105,6 @@ class Link(models.Model):
             self.code = utils.encode(self.id)
             threading.Thread(target=utils.create_qrcode, args=(self,)).start()
             threading.Thread(target=utils.get_link_meta, args=(self,)).start()
-            # qr = QRCodeGen(self.code)  # generate qr code
-            # qr.start()
-            # if self.user:
-            #     get_link_meta(self)
-            # else:
-            #     m = threading.Thread(target=get_link_meta, name='t1',
-            #                          args=[self])
-            #     m.start()
             super(Link, self).save()
 
     def to_json(self):
