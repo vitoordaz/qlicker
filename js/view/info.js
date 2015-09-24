@@ -24,6 +24,8 @@ define([
     render: function() {
       if (_.isEmpty(this.model.get('redirects'))) {
         this.$('.redirects').hide();
+        this.$('.countries').hide();
+        this.$('.domains').hide();
       } else {
         this.$('.redirects').show();
         this.renderRedirectsChart();
@@ -31,8 +33,8 @@ define([
         this.$('.countries').show();
         this.renderCountriesChart();
 
-        this.$('.referrer').show();
-        this.renderReferrerChart();
+        this.$('.domains').show();
+        this.renderDomainsChart();
       }
       return this;
     },
@@ -103,7 +105,127 @@ define([
             return height - y(d.redirects);
           });
     },
-    renderCountriesChart: function() {}
-    renderReferrerChart: function() {}
+    renderCountriesChart: function() {
+      var data = this.model.get('countries');
+      var $chart = this.$('.countries-chart');
+      var legendRectSize = 16;
+      var legendSpacing = 6;
+      var margin = {top: 10, right: 10, bottom: 10, left: 10};
+      var width = $chart.width() - margin.left - margin.right;
+      var height = $chart.height() - margin.top - margin.bottom;
+      var radius = Math.min(width, height) / 2;
+      var center = {
+        top: (height + margin.top + margin.bottom) / 2,
+        left: (width + margin.left + margin.right) / 2
+      };
+      var chart = d3.select('.countries-chart')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+          .attr('transform',
+                'translate(' + center.left + ',' + center.top + ')');
+      var color = d3.scale.category20b();
+      var arc = d3.svg.arc().outerRadius(radius).innerRadius(0.7 * radius);
+      var pie = d3.layout.pie()
+        .value(function(d) {
+          return d.redirects;
+        })
+        .sort(null);
+      chart.selectAll('path')
+        .data(pie(data))
+        .enter()
+        .append('path')
+          .attr('d', arc)
+          .attr('fill', function(d, i) {
+            return color(d.country);
+          });;
+
+      var legend = chart.selectAll('.legend')
+        .data(data)
+        .enter()
+        .append('g')
+          .attr('class', 'legend')
+          .attr('transform', function(d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset =  height * data.length / 2;
+            var left = -2 * legendRectSize;
+            var top = i * height - offset;
+            return 'translate(' + left + ',' + top + ')';
+          });
+
+      legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', color)
+        .style('stroke', color);
+        
+      legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', 12)
+        .text(function(d) {
+          return d.country + ' (' + d.redirects + ')';
+        });
+    },
+    renderDomainsChart: function() {
+      var data = this.model.get('domains');
+      var $chart = this.$('.domains-chart');
+      var legendRectSize = 16;
+      var legendSpacing = 6;
+      var margin = {top: 10, right: 10, bottom: 10, left: 10};
+      var width = $chart.width() - margin.left - margin.right;
+      var height = $chart.height() - margin.top - margin.bottom;
+      var radius = Math.min(width, height) / 2;
+      var center = {
+        top: (height + margin.top + margin.bottom) / 2,
+        left: (width + margin.left + margin.right) / 2
+      };
+      var chart = d3.select('.domains-chart')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+          .attr('transform',
+                'translate(' + center.left + ',' + center.top + ')');
+      var color = d3.scale.category20b();
+      var arc = d3.svg.arc().outerRadius(radius).innerRadius(0.7 * radius);
+      var pie = d3.layout.pie()
+        .value(function(d) {
+          return d.redirects;
+        })
+        .sort(null);
+      chart.selectAll('path')
+        .data(pie(data))
+        .enter()
+        .append('path')
+          .attr('d', arc)
+          .attr('fill', function(d, i) {
+            return color(d.country);
+          });;
+
+      var legend = chart.selectAll('.legend')
+        .data(data)
+        .enter()
+        .append('g')
+          .attr('class', 'legend')
+          .attr('transform', function(d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset =  height * data.length / 2;
+            var left = -50;
+            var top = i * height - offset;
+            return 'translate(' + left + ',' + top + ')';
+          });
+
+      legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', color)
+        .style('stroke', color);
+        
+      legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', 12)
+        .text(function(d) {
+          return d.domain + ' (' + d.redirects + ')';
+        });
+    }
   });
 });

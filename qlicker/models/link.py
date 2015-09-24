@@ -1,6 +1,7 @@
+import datetime
 import re
 import urllib
-import datetime
+import threading
 
 from django.db import models
 from django.contrib.auth import models as auth_models
@@ -55,6 +56,12 @@ class Link(models.Model):
     title = models.CharField(verbose_name=_('URL title'), max_length=150,
                              blank=True, null=True)
 
+    qr_code = models.CharField(verbose_name=_('QR code'), max_length=255,
+                               blank=True, null=True)
+
+    favicon = models.CharField(verbose_name=_('Favicon'), max_length=255,
+                               blank=True, null=True)
+
     objects = LinksManager()
 
     class Meta:
@@ -71,10 +78,6 @@ class Link(models.Model):
 
     def __unicode__(self):
         return str(self.url)
-
-    @property
-    def favicon(self):
-        return '%sfavicon/%s.png' % (settings.MEDIA_URL, self.code)
 
     @property
     def qlink(self):
@@ -100,6 +103,8 @@ class Link(models.Model):
         super(Link, self).save(**kwargs)
         if not self.code:
             self.code = utils.encode(self.id)
+            threading.Thread(target=utils.create_qrcode, args=(self,)).start()
+            threading.Thread(target=utils.get_link_meta, args=(self,)).start()
             # qr = QRCodeGen(self.code)  # generate qr code
             # qr.start()
             # if self.user:
@@ -118,5 +123,6 @@ class Link(models.Model):
             'favicon': self.favicon,
             'title': self.title,
             'created_at': utils.datetime2timestamp(self.created_at),
-            'redirects': self.redirects
+            'redirects': self.redirects,
+            'qr_code': self.qr_code
         }

@@ -26,21 +26,19 @@
       </div>
       <div class="fr">
         {% block header-right %}
-          {% if user.is_anonymous %}
+          {% if not user or user.is_anonymous %}
             <a href="{% url 'login' %}" title="{% trans 'Login' %}">{% trans "Login" %}</a>
             <a class="ml-10" href="{% url 'registration' %}" title="{% trans 'Register' %}">{% trans "Register" %}</a>
           {% else %}
             <span>{% blocktrans with user.username as username %}Hi, {{ username }}!{% endblocktrans %}</span>
-<!--             <a href="{% url 'index' %}" class="user-link">
+            <a href="{% url 'index' %}" class="user-link">
               <span class="avatar">
                 <img src="{{ user.get_avatar }}" alt="" title=""/>
               </span>
               <span>{{ user.username }}</span>
               <span class="arrow"></span>
-            </a> -->
+            </a>
             <a class="ml-10" href="{% url 'profile' %}">{% trans "Profile" %}</a>
-              {# <li><a href="{% url 'archive' %}">{% trans "Archive" %}</a></li> #}
-              {# <li><a href="{% url 'help' %}">{% trans "Help" %}</a></li> #}
             <a class="ml-10" href="{% url 'logout' %}">{% trans "Logout" %}</a>
           {% endif %}
         {% endblock %}
@@ -54,9 +52,7 @@
   <div class="container">
     <div class="page">
       <div class="headline">{% block headline %}{% endblock %}</div>
-      <div class="content">
-        {% block data %}{% endblock %}
-      </div>
+      <div class="content">{% block data %}{% endblock %}</div>
     </div>
   </div>
 </main>

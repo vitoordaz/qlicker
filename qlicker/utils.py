@@ -1,8 +1,16 @@
+import boto
 import datetime
 import os
+import tempfile
 import threading
 import urllib2
+import uuid
 import urlparse
+import qrcode
+
+import BeautifulSoup
+
+from django.conf import settings
 
 
 # Date for timestamp of the epoch.
@@ -68,13 +76,72 @@ def normalize_url(url):
 
 
 def datetime2timestamp(dv):
-  if not dv:
-    return
-  if isinstance(dv, datetime.datetime):
-    delta = dv - EPOCH
-  else:
-    delta = dv - EPOCH.date()
-  millis = ((delta.days * 24 * 60 * 60 * 1000) +
-            (delta.seconds * 1000) +
-            (delta.microseconds / 1000))
-  return millis
+    if not dv:
+        return
+    if isinstance(dv, datetime.datetime):
+        delta = dv - EPOCH
+    else:
+        delta = dv - EPOCH.date()
+    millis = ((delta.days * 24 * 60 * 60 * 1000) +
+              (delta.seconds * 1000) +
+              (delta.microseconds / 1000))
+    return millis
+
+
+def create_qrcode(link):
+    """This function generates QR code file for the given content."""
+    qr = qrcode.QRCode(version=1, box_size=10, border=4,
+                       error_correction=qrcode.constants.ERROR_CORRECT_H)
+    qr.add_data(link.qlink)
+    qr.make(fit=True)
+    img = qr.make_image()
+    fd, path = tempfile.mkstemp(prefix='qlicker-qr-')
+    try:
+        img.save(path)
+    finally:
+        os.close(fd)
+    key_name = '%s.png' % uuid.uuid4().hex
+    conn = boto.connect_s3()
+    bucket = conn.create_bucket(settings.QR_CODES_BUCKET)
+    key = bucket.new_key(key_name)
+    headers = {'content-type': 'image/png'}
+    key.set_contents_from_filename(path, headers=headers)
+    key.make_public()
+    link.qr_code = key.generate_url(expires_in=0, query_auth=False,
+                                    force_http=True)
+    link.save()
+
+
+def get_link_meta(link):
+    opener = urllib2.build_opener()
+    opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+    try:
+        res = opener.open(link.url)
+        encoding = None
+        content_type = res.headers.get('Content-type', None)
+        if content_type:
+            charset_idx = content_type.find('charset=')
+            if charset_idx:
+                charset = content_type.strip()
+                encoding = charset[charset_idx+len('charset='):]
+        html = res.read(settings.MAX_FOR_DOWNLOAD)
+        res.close()
+        try:
+            soup = BeautifulSoup.BeautifulSoup(
+                html, fromEncoding=encoding,
+                convertEntities=BeautifulSoup.BeautifulStoneSoup.HTML_ENTITIES)
+            title = soup.find('title')
+            if title:
+                link.title = title.contents[0][:150]
+            favicon = (soup.find('link', attrs={'rel': 'shortcut icon'}) or
+                       soup.find('link', attrs={'rel': 'icon'}))
+            if favicon:
+                link.favicon = favicon.get('href', None)
+        except TypeError:
+            return
+    except urllib2.URLError:
+        return
+    link.save()
+    # get_favicon(favicon_url, link.url, '%s.png' % link.code)
+    # if not link.user:
+    #     link.save()

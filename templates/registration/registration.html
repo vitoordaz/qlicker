@@ -13,7 +13,7 @@
 <form id="register-view" action="." method="POST">
   {% csrf_token %}
   {% for field in form %}
-    <div class="field {% if field.name = "news" %}line{% endif %}">
+    <div class="field">
       {{ field.label_tag }}
       {{ field }}
       {% if field.errors %}

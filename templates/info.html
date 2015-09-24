@@ -7,29 +7,34 @@
 
 {% block data %}
   <div id="link-info-view">
-    <h3>
-      {% blocktrans with link.redirects as redirects and link.qlink as qlink and link.created_at as created_at %}
-        {{ redirects }} redirects for <a href="{{ qlink }}">{{ qlink }}</a> &mdash; from {{ created_at }}
-      {% endblocktrans %}
-    </h3>
-
-    {% if link.title  %}
-      <h4 class="noborder"><img src="{{ link.favicon }}" alt="" title=""/> {{ link.title }}</h4>
-    {% endif %}
-
-    {% comment %}
-    <div class="qr-code">
-    <a href="{% url qrcode link.code %}"><img src="{% url qrcode link.code %}" alt="{% trans 'QR code' %}" title="{% trans 'QR код' %}" /></a>
+    <div class="info oh mb-10">
+      <div class="qr-code fl">
+        <img src="{{ link.qr_code }}" alt="{% trans 'QR code' %}" title="{% trans 'QR code' %}"/>
+      </div>
+      <div class="description fl">
+        <h3>{% if link.title %}<img class="favicon" src="{{ link.favicon }}" alt="" title=""/> {{ link.title }}{% else %}{{ link.qlink }}{% endif %}</h3>
+        <p>
+          {% blocktrans with link.redirects as redirects and link.qlink as qlink and link.created_at as created_at %}
+            {{ redirects }} redirects for <a href="{{ qlink }}">{{ qlink }}</a> &mdash; from {{ created_at }}
+          {% endblocktrans %}
+        </p>
+      </div>
     </div>
-    {% endcomment %}
 
     <div class="stat">
       <div class="oh redirects">
+        <h3>{% trans "Redirects by date" %}</h3>
         <svg class="redirects-chart"></svg>
       </div>
       <div class="oh">
-        <div class="fl referrer"></div>
-        <div class="fr countries"></div>
+        <div class="fl domains">
+          <h3 class="tl">{% trans "Redirects by domains" %}</h3>
+          <svg class="chart domains-chart"></svg>
+        </div>
+        <div class="fr countries">
+          <h3 class="tl">{% trans "Redirects by countries" %}</h3>
+          <svg class="chart countries-chart"></svg>
+        </div>
       </div>
     </div>
   </div>

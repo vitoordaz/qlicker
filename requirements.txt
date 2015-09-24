@@ -2,3 +2,4 @@ Django==1.8.4
 BeautifulSoup==3.2.1
 pillow==2.3.0
 qrcode==5.1
+boto==2.38.0

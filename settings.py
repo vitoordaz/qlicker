@@ -129,3 +129,8 @@ LOGIN_URL = '/a/login/'
 GEOIP_COUNTRY_FILE = os.path.join(PROJECT_DIR, 'tmp', 'GeoIPCountryWhois.csv')
 GEOIP_DB_URL = ('http://geolite.maxmind.com/download/geoip/database/'
                 'GeoIPCountryCSV.zip')
+
+# S3
+QR_CODES_BUCKET = 'qlicker-qr-codes'
+
+MAX_FOR_DOWNLOAD = 300 * 1024  # 300Kb
