@@ -12,18 +12,18 @@ from qlicker.models import twitter
 admin.site.register(registration_profile.RegistrationProfile)
 
 
-class FacebookAdmin(admin.ModelAdmin):
-    list_display = ('active', 'user', 'screen_name', 'user_id',)
-
-
-admin.site.register(facebook.Facebook, FacebookAdmin)
-
-
-class TwitterAdmin(admin.ModelAdmin):
-    list_display = ('active', 'user', 'screen_name',)
-
-
-admin.site.register(twitter.Twitter, TwitterAdmin)
+# class FacebookAdmin(admin.ModelAdmin):
+#     list_display = ('active', 'user', 'screen_name', 'user_id',)
+#
+#
+# admin.site.register(facebook.Facebook, FacebookAdmin)
+#
+#
+# class TwitterAdmin(admin.ModelAdmin):
+#     list_display = ('active', 'user', 'screen_name',)
+#
+#
+# admin.site.register(twitter.Twitter, TwitterAdmin)
 
 
 class LinkAdmin(admin.ModelAdmin):

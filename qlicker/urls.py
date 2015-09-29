@@ -24,7 +24,7 @@ from qlicker.views import registration_error
 
 
 urlpatterns = [
-    url(r'^admin/?', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', index.index, name='index'),
     url(r'^link/$', link.link, name='link'),
